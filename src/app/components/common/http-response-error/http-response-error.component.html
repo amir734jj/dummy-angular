@@ -1,0 +1,12 @@
+<div *ngIf="httpErrorResponse" class="alert alert-danger">
+  <h4 class="alert-heading">Error {{ httpErrorResponse.status }}: {{ httpErrorResponse.statusText }}</h4>
+  <p><strong>Message:</strong> {{ httpErrorResponse.message }}</p>
+  <p *ngIf="error.message">
+    <strong>Details:</strong> {{ error.message }}
+  </p>
+  <p *ngIf="error.errors">
+    <strong>Additional Errors:</strong>
+  <ul>
+    <li *ngFor="let err of error.errors">{{ err }}</li>
+  </ul>
+</div>

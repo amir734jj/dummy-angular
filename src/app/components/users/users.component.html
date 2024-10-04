@@ -1,0 +1,48 @@
+<div class="container">
+  <h2>Users</h2>
+  <p>This is the list of users</p>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th> Name </th>
+      <th> Email </th>
+      <th> Description </th>
+      <th> Actions </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td> {{ user.name }} </td>
+      <td> {{ user.email }} </td>
+      <td> {{ user.description }} </td>
+      <td>
+        <div class="btn-group" dropdown *ngIf="cachedAuthenticationService.profile?.id !== user.id">
+          <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                  aria-controls="dropdown-basic">
+            Actions <span class="caret"></span>
+          </button>
+          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+              role="menu" aria-labelledby="button-basic">
+            <li role="menuitem">
+              <a class="dropdown-item" routerLink="/">Profile</a>
+            </li>
+            <li role="menuitem">
+              <button class="dropdown-item" (click)="toggleActive(user, !user.active)">
+                {{ user.active ? "deactivate" : "activate" }}
+              </button>
+            </li>
+            <li role="menuitem">
+              <button class="dropdown-item" (click)="toggleRole(user, hasUserRole(user, UserRole.ADMIN) ? UserRole.BASIC : UserRole.ADMIN)">
+                {{ hasUserRole(user, UserRole.ADMIN) ? "set basic" : "set admin" }}
+              </button>
+            </li>
+          </ul>
+        </div>
+        <label *ngIf="cachedAuthenticationService.profile?.id === user.id">
+          cannot modify your own account
+        </label>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
